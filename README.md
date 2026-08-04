@@ -1,8 +1,8 @@
 # PCA and Classical MDS: Theory and Experiments
 
-This repository contains the companion code for the article:
+This repository contains the article in mds_pca_similarity.pdf and the comparison codes in mds_pca_comparison.py, with the articale title of:
 
-> **The Relationship Between Principal Component Analysis (PCA) and Classical Multidimensional Scaling (MDS): Theory and Experiments**
+> **Why do PCA and classical MDS produce the same embedding**
 
 The script reproduces all experiments presented in the article, including:
 
