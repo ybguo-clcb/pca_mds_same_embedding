@@ -47,7 +47,7 @@ D \rightarrow B \rightarrow V\Lambda V^T \rightarrow Z.
 $$
 
 ### The MDS Solution Is Not Unique
-An important observation is that the coordinate matrix reconstructed by Classical MDS is not the unique solution satisfying
+An important observation is that the coordinate matrix reconstructed by Classical MDS is __not__ the unique solution satisfying
 
 $$
 B = Z^T Z.
@@ -80,3 +80,101 @@ Z = \Lambda^{1/2} V^T.
 $$
 
 Therefore, Classical MDS should not simply be regarded as a method for recovering a coordinate representation of the point configuration from pairwise distances. Instead, it selects a canonical coordinate system determined by the eigen-decomposition from an infinite family of equivalent embeddings.
+### Why Do PCA and Classical MDS Produce the Same Embedding?
+The connection between PCA and Classical MDS now becomes clear.
+
+Suppose we perform PCA on the coordinates reconstructed by Classical MDS. Since $Z$ is already centered,
+
+$$
+\begin{aligned}
+\mathrm{Cov}(Z)
+&= \frac{ZZ^T}{m-1} \\
+&= \frac{\Lambda^{1/2}V^T V\Lambda^{1/2}}{m-1} \\
+&= \frac{\Lambda}{m-1}.
+\end{aligned}
+$$
+
+which is already diagonal.
+
+Therefore, no further rotation is required—the coordinates reconstructed by Classical MDS are already expressed in the principal-coordinate system.
+
+Now consider another valid reconstruction,
+
+$$
+Z' = Q\Lambda^{1/2}V^T,
+$$
+
+where $Q$ is an arbitrary orthogonal matrix.
+
+This alternative reconstruction produces exactly the same pairwise distance matrix because
+
+```math
+\frac{Z^{\prime}(Z^{\prime})^T}{m-1}
+=
+\frac{Q\Lambda Q^T}{m-1}
+```
+
+which differs only by an orthogonal transformation.
+
+This explains why the distance matrix admits infinitely many coordinate representations of the point configuration, while Classical MDS chooses the canonical one obtained directly from eigen-decomposition. That canonical representation coincides with the coordinate system produced by PCA.
+
+### Underlying Principles
+The mathematical derivation explains __how__ Classical MDS and PCA produce the same embedding. A more fundamental question is __why__ this happens. Why does the canonical embedding selected by Classical MDS coincide with the PCA coordinate system?
+
+The objective of PCA is well known: among all $d^{\prime}<d$-dimensional linear subspaces, it seeks the one that maximizes the total variance of the projected data.
+
+What, then, is the corresponding objective of Classical MDS?
+
+Starting from
+
+```math
+B=Z^TZ,
+```
+
+consider the quadratic form
+
+```math
+c^T Z^T Z c = \lVert Zc \rVert^2,
+```
+
+where $c$ satisfies
+
+```math
+c^Tc=1.
+```
+
+The vector $Z$ crepresents a direction in the reconstructed coordinate system, and its squared Euclidean norm measures the energy along that direction.
+
+Consequently, the solution adopted by Classical MDS is exactly the optimizer of
+
+```math
+\arg\max_c \; c^T Z^T Z c,
+```
+
+subject to
+
+```math
+c^Tc=1.
+```
+
+More generally, if we seek a $d^{\prime}$-dimensional subspace, the optimization becomes
+
+```math
+\arg\max_C \; \mathrm{Tr}\left(C^T Z^T Z C\right),
+```
+
+subject to
+
+```math
+C^TC=I.
+```
+
+Applying the method of Lagrange multipliers yields
+
+```math
+Z^T Z C = C\Lambda.
+```
+
+Therefore, Classical MDS can be interpreted as searching for the set of directions that maximizes the total energy of the point configuration under the Euclidean-distance constraint.
+
+This immediately explains the equivalence with PCA. Formally, the matrices $ZZ^T$ and $Z^TZ$ generally have different dimensions and different eigenvectors, but they share exactly the same nonzero eigenvalues, and their eigenvectors are related through the singular vectors of $Z$. Conceptually, PCA and Classical MDS solve the same optimization problem from different mathematical formulations. PCA maximizes the covariance of the projected data, whereas Classical MDS maximizes the energy of the reconstructed point configuration. For centered Euclidean data, these two objectives are equivalent. Therefore, both methods ultimately solve the same spectral problem and recover equivalent embeddings.
