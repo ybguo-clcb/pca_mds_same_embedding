@@ -90,7 +90,7 @@ $$
 \mathrm{Cov}(Z)
 &= \frac{ZZ^T}{m-1} \\
 &= \frac{\Lambda^{1/2}V^T V\Lambda^{1/2}}{m-1} \\
-&= \frac{\Lambda}{m-1}.
+&= \frac{\Lambda}{m-1},
 \end{aligned}
 $$
 
@@ -180,7 +180,7 @@ Therefore, Classical MDS can be interpreted as searching for the set of directio
 This immediately explains the equivalence with PCA. Formally, the matrices $ZZ^T$ and $Z^TZ$ generally have different dimensions and different eigenvectors, but they share exactly the same nonzero eigenvalues, and their eigenvectors are related through the singular vectors of $Z$. Conceptually, PCA and Classical MDS solve the same optimization problem from different mathematical formulations. PCA maximizes the covariance of the projected data, whereas Classical MDS maximizes the energy of the reconstructed point configuration. For centered Euclidean data, these two objectives are equivalent. Therefore, both methods ultimately solve the same spectral problem and recover equivalent embeddings.
 
 ## Experimental Results on a Toy Dataset
-To verify the theoretical analysis, we first construct a simple two-dimensional toy dataset. A total of 1,000 random points are generated within the unit square, with the additional constraint that each point lies within a distance of 0.2 from the line $y=0.7$. Consequently, the data approximately lie on a one-dimensional manifold embedded in a two-dimensional space. The original dataset is shown in Figure 1.
+To verify the theoretical analysis, we first construct a simple two-dimensional toy dataset. A total of 1,000 random points are generated within the unit square, with the additional constraint that each point lies within a distance of 0.2 from the line $y=0.7x$. Consequently, the data approximately lie on a one-dimensional manifold embedded in a two-dimensional space. The original dataset is shown in Figure 1.
 
 ![Fig. 1 The generated toy data points.](figures/fig1_generated_points.png)
 
@@ -242,7 +242,7 @@ The centered Gram matrix serves as the bridge between these two descriptions. PC
 
 ![Fig. 5 Coordinates and pairwise distances provide two different mathematical descriptions of the same Euclidean point configuration. PCA and Classical MDS take these two descriptions as input, but both ultimately recover the same principal-coordinate representation through the centered Gram matrix.](figures/fig5_concept_map.png)
 
-This unified viewpoint also clarifies the scope of the equivalence. The discussion throughout this paper applies specifically to __Classical MDS__ under __Euclidean distances__. If the dissimilarities are non-Euclidean, the double-centered matrix is no longer guaranteed to represent an exact Euclidean point configuration. Likewise, metric and non-metric MDS optimize different objective functions and therefore are not expected to be equivalent to PCA in general.
+This unified viewpoint also clarifies the scope of the equivalence. The discussion throughout this article applies specifically to __Classical MDS__ under __Euclidean distances__. If the dissimilarities are non-Euclidean, the double-centered matrix is no longer guaranteed to represent an exact Euclidean point configuration. Likewise, metric and non-metric MDS optimize different objective functions and therefore are not expected to be equivalent to PCA in general.
 
 More broadly, this perspective suggests that many dimensionality reduction algorithms differ primarily in __how the geometric structure of the data is represented__, rather than in __what geometric structure they ultimately seek to recover__. In the case of PCA and Classical MDS, the mathematical descriptions are different, but the underlying geometry—and consequently the recovered principal-coordinate representation—is the same.
 
